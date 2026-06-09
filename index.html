@@ -446,6 +446,346 @@
   .item .voices blockquote{ font-size: 17px; }
 }
 
+/* === CARDS & MASTHEAD UPGRADE === */
+/* ============================================================================
+   PREMIUM DROP-IN OVERRIDE — Мастхед-шапка + .q-card система + микро-детали
+   Тёплая палитра и шрифты (Fraunces/Inter) сохранены. Только переопределения,
+   ничего не ломаем. Append в конец существующего <style>.
+   ============================================================================ */
+
+/* ---------- 0 · Мягкая моторика (тёплая, сдержанная, не крикливая) -------- */
+.top, .ribbon, .quick, .q-card,
+.q-head .n, .q-head .tag, .q-head .hl, .cf,
+.q-card h3, .q-card .q-text, .q-bottom a.see, .top h1 .b{
+  transition:
+    background-color .35s ease,
+    color .35s ease,
+    border-color .35s ease,
+    box-shadow .45s ease,
+    transform .45s cubic-bezier(.22,.61,.36,1);
+}
+
+/* ============================================================================
+   1 · ШАПКА — обложка-мастхед: воздух, двойная хейрлайн, оптический заголовок
+   ============================================================================ */
+.top{
+  padding:58px 56px 40px;
+  /* сохраняем нижнюю границу как у исходника + тёплый радиальный свет */
+  background:
+    radial-gradient(120% 90% at 88% -18%, var(--accent-tint) 0%, rgba(238,245,241,0) 56%),
+    linear-gradient(180deg, var(--paper-warm), var(--paper));
+  box-shadow:inset 0 -1px 0 var(--line-soft);
+}
+/* верхняя accent-полоса — тоньше и «дороже», с лёгким тёплым стыком */
+.top::before{
+  height:3px;
+  background:linear-gradient(90deg,
+    var(--accent-dark) 0%, var(--accent) 44%, var(--accent) 56%, var(--accent-dark) 100%);
+  box-shadow:0 1px 0 rgba(47,93,80,.16);
+}
+/* вторая волосяная линия под полосой — фирменный двойной штрих мастхеда */
+.top::after{
+  content:'';position:absolute;left:56px;right:56px;top:11px;height:1px;
+  background:var(--accent-soft);opacity:.7;
+}
+
+/* eyebrow — шире разрядка, изящные ticks-градиенты, дата выпуска уходит вправо */
+.top .eyebrow{
+  gap:16px;
+  font-size:10.5px;
+  letter-spacing:.34em;
+}
+.top .tick{
+  width:34px;height:1px;
+  background:linear-gradient(90deg, transparent, var(--accent) 35%, var(--accent) 65%, transparent);
+  opacity:.85;
+}
+/* последний элемент eyebrow (неделя · год) — правый якорь, как в журналах */
+.top .eyebrow > *:last-child{
+  margin-left:auto;
+  color:var(--ink-muted);
+  font-weight:600;
+}
+
+/* H1 — выразительный display, оптический размер, мягкая иерархия */
+.top h1{
+  font-size:clamp(40px,5.2vw,52px);
+  line-height:1.05;
+  letter-spacing:-.025em;
+  margin-top:28px;
+  max-width:18ch;
+  font-optical-sizing:auto;
+  font-variation-settings:'opsz' 144;
+  font-feature-settings:"liga" 1,"dlig" 1,"calt" 1;
+}
+/* даты внутри h1 — accent + тихое тёплое подчёркивание, проявляется на ховере */
+.top h1 .b{
+  color:var(--accent);
+  font-style:italic;
+  background-image:linear-gradient(var(--accent-soft), var(--accent-soft));
+  background-repeat:no-repeat;
+  background-position:0 92%;
+  background-size:0% .12em;
+  padding-bottom:.02em;
+  transition:background-size .45s cubic-bezier(.22,.61,.36,1);
+}
+.top:hover h1 .b{ background-size:100% .12em; }
+
+/* ============================================================================
+   2 · РУБРИКА .ribbon (h2 со вложенным .lead-line) — воздушнее, с засечкой
+   ВНИМАНИЕ: .lead-line это <span> внутри <h2>, поэтому ведущую чёрточку
+   рисуем inline-блоком ПЕРЕД киккером, не трогая поток span.
+   ============================================================================ */
+.ribbon{
+  padding:46px 56px 0;
+  letter-spacing:.26em;
+}
+/* короткая accent-засечка перед текстом рубрики */
+.ribbon::before{
+  content:'';
+  display:inline-block;
+  width:24px;height:2px;
+  background:var(--accent);
+  border-radius:2px;
+  vertical-align:middle;
+  margin-right:14px;
+  transform:translateY(-2px);
+}
+.ribbon .lead-line{
+  font-size:clamp(22px,2.5vw,25px);
+  line-height:1.2;
+  letter-spacing:-.01em;
+  margin-top:10px;
+  max-width:32ch;
+  text-wrap:balance;
+}
+
+/* ============================================================================
+   3 · КАРТОЧКИ .quick / .q-card — изящные, сканируемые, лёгкий ховер
+   ============================================================================ */
+.quick{ padding:20px 56px 44px; }
+
+.q-card{
+  position:relative;
+  padding:24px 22px 24px 22px;
+  margin:0 -22px;                 /* ховер-фон выходит к краям, текст не сдвигается */
+  border-top:1px solid var(--line-soft);
+  border-radius:8px;
+  transition:
+    background-color .4s ease,
+    box-shadow .5s ease,
+    transform .5s cubic-bezier(.22,.61,.36,1);
+}
+.q-card:first-of-type{ border-top:none; }
+
+/* тонкая accent-полоска слева — проявляется на ховере (тихий редакторский cue) */
+.q-card::before{
+  content:'';position:absolute;left:0;top:24px;bottom:24px;width:2px;
+  background:var(--accent);border-radius:2px;
+  opacity:0;transform:scaleY(.4);transform-origin:top;
+  transition:opacity .45s ease, transform .5s cubic-bezier(.22,.61,.36,1);
+}
+.q-card:hover{
+  background:linear-gradient(180deg, var(--paper) 0%, var(--paper-warm) 100%);
+  box-shadow:
+    0 1px 0 var(--line-soft),
+    0 12px 32px -20px rgba(31,63,54,.30),
+    0 2px 8px -6px rgba(31,63,54,.14);
+  transform:translateY(-1px);
+}
+.q-card:hover::before{ opacity:.9; transform:scaleY(1); }
+
+/* ---------- Шапка карточки: ритм номер / тег / бейдж / ✦ ------------------ */
+.q-head{ gap:13px; align-items:center; }
+
+/* номер 01..13 — выразительный, табличные цифры, делитель-хейрлайн справа */
+.q-head .n{
+  min-width:auto;
+  font-size:31px;
+  line-height:1;
+  letter-spacing:-.01em;
+  color:var(--accent);
+  font-feature-settings:'tnum' 1,'lnum' 1,"liga" 1;
+  position:relative;
+  padding-right:15px;
+}
+.q-head .n::after{
+  content:'';position:absolute;right:0;top:5px;bottom:3px;width:1px;
+  background:var(--line);
+}
+.q-card:hover .q-head .n{ color:var(--accent-dark); }
+
+/* тег-пилюля — прямоугольная (консистентно с шаблоном), мягкий внутр. контур */
+.q-head .tag{
+  font-size:10px;
+  letter-spacing:.15em;
+  padding:4px 10px;
+  border-radius:4px;
+  background:var(--accent-tint);
+  color:var(--accent-dark);
+  box-shadow:inset 0 0 0 1px rgba(47,93,80,.12);
+}
+.q-card:hover .q-head .tag{ box-shadow:inset 0 0 0 1px rgba(47,93,80,.24); }
+
+/* ✦ — тихий акцент, мягкое свечение на ховере */
+.q-head .hl{
+  font-size:14px;
+  line-height:1;
+  opacity:.85;
+  text-shadow:0 0 0 rgba(47,93,80,0);
+}
+.q-card:hover .q-head .hl{ text-shadow:0 0 10px rgba(47,93,80,.28); }
+
+/* бейдж уверенности — тёплая заливка от currentColor, уезжает вправо */
+.q-head .cf{ margin-left:auto; }
+.cf{
+  font-size:9.5px;
+  letter-spacing:.13em;
+  padding:3px 10px;
+  border-radius:4px;
+  background:color-mix(in srgb, currentColor 7%, var(--paper));
+  border-color:color-mix(in srgb, currentColor 40%, transparent);
+}
+.cf::before{
+  width:5px;height:5px;
+  box-shadow:0 0 0 3px color-mix(in srgb, currentColor 14%, transparent);
+}
+.q-card:hover .cf{
+  background:color-mix(in srgb, currentColor 11%, var(--paper));
+  border-color:color-mix(in srgb, currentColor 55%, transparent);
+}
+
+/* ---------- Заголовок + тело --------------------------------------------- */
+.q-card h3{
+  font-size:22px;
+  line-height:1.2;
+  letter-spacing:-.012em;
+  margin-top:13px;
+  color:var(--ink);
+  max-width:46ch;
+}
+.q-card .q-text{
+  margin-top:11px;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--ink-soft);
+  max-width:62ch;
+}
+.q-card .q-text strong{ color:var(--accent-dark); font-weight:600; }
+
+/* «Вывод:» — выделенная pull-строка с accent-ромбом (рифма с маркерами .react).
+   Срабатывает только когда есть ВТОРОЙ q-text (т.е. реальный «Вывод»). */
+.q-card .q-text:last-of-type:not(:first-of-type){
+  position:relative;
+  margin-top:14px;
+  padding:12px 16px 12px 32px;
+  background:var(--accent-tint);
+  border:1px solid var(--accent-soft);
+  border-radius:6px;
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.55;
+}
+.q-card:hover .q-text:last-of-type:not(:first-of-type){ background:var(--paper-warm); }
+.q-card .q-text:last-of-type:not(:first-of-type)::before{
+  content:'';position:absolute;left:15px;top:1.15em;
+  width:7px;height:7px;
+  background:var(--accent);
+  transform:rotate(45deg);
+  border-radius:1px;
+  opacity:.9;
+}
+.q-card .q-text:last-of-type:not(:first-of-type) strong{
+  color:var(--accent-dark);
+  font-weight:700;
+  font-family:var(--body);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  font-size:10.5px;
+  margin-right:7px;
+}
+
+/* ---------- Кнопка-источник .q-bottom a.see — аккуратная, со стрелкой ----- */
+.q-bottom{ margin-top:16px; gap:12px; }
+.q-bottom a.see{
+  display:inline-flex;align-items:center;
+  background:transparent;
+  color:var(--accent-dark);
+  padding:8px 15px;
+  border-radius:4px;
+  border:1px solid var(--accent-soft);
+  border-bottom:1px solid var(--accent-soft);   /* перебиваем глобальный a{border-bottom} */
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.09em;
+  box-shadow:0 1px 2px rgba(28,36,31,.10);
+  transition:
+    background-color .3s ease,
+    color .3s ease,
+    border-color .3s ease,
+    box-shadow .4s ease,
+    transform .25s cubic-bezier(.22,.61,.36,1);
+}
+.q-bottom a.see:hover{
+  background:var(--accent);
+  color:var(--paper);
+  border-color:var(--accent);
+  transform:translateY(-1px);
+  box-shadow:
+    0 2px 4px rgba(31,63,54,.22),
+    0 8px 18px -10px rgba(31,63,54,.50);
+}
+.q-bottom a.see:active{
+  transform:translateY(0);
+  box-shadow:0 1px 2px rgba(28,36,31,.22);
+}
+/* стрелка, выезжающая на ховере — читается как настоящая ссылка */
+.q-bottom a.see::after{
+  content:'→';
+  display:inline-block;
+  font-size:13px;line-height:1;
+  margin-left:0;max-width:0;
+  opacity:0;overflow:hidden;
+  transform:translateX(-4px);
+  transition:max-width .3s ease, opacity .3s ease, margin-left .3s ease, transform .3s ease;
+}
+.q-bottom a.see:hover::after{
+  margin-left:8px;max-width:1.2em;
+  opacity:1;transform:translateX(0);
+}
+/* доступный тёплый focus-ring */
+.q-bottom a.see:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 3px var(--accent-soft), 0 0 0 4px var(--accent);
+}
+
+/* ============================================================================
+   4 · АДАПТИВ
+   ============================================================================ */
+@media (max-width:760px){
+  .top{ padding:44px 18px 32px; }
+  .top::after{ left:18px; right:18px; }
+  .ribbon{ padding-left:18px; padding-right:18px; }
+  .quick{ padding-left:18px; padding-right:18px; }
+  .q-card{ margin:0 -14px; padding:22px 14px; }
+  .q-card::before{ top:22px; bottom:22px; }
+  .q-head .n{ font-size:28px; }
+  .q-head .cf{ margin-left:0; }   /* на узких экранах бейдж не уезжает в край */
+}
+
+/* ============================================================================
+   5 · MOTION HYGIENE
+   ============================================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+  }
+  .q-card:hover{ transform:none; }
+  .q-bottom a.see:hover,
+  .q-bottom a.see:active{ transform:none; }
+}
+
   .langbar{position:sticky;top:0;z-index:30;display:flex;justify-content:flex-end;gap:6px;padding:10px 56px;background:var(--paper-warm);border-bottom:1px solid var(--line);}
   .langbar button{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--accent-soft);background:var(--paper);color:var(--ink-muted);border-radius:3px;cursor:pointer;transition:.15s;}
   .langbar button:hover{color:var(--accent);border-color:var(--accent);}
