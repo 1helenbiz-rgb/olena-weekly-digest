@@ -100,6 +100,352 @@
     .top h1{font-size:29px;} .item h3{font-size:22px;} .who .gr{grid-template-columns:1fr;}
   }
 
+/* === EDITORIAL DESIGN UPGRADE === */
+/* ============================================================================
+   EDITORIAL PREMIUM — OVERRIDE LAYER  (append to end of <style>)
+   Тёплая зелёная палитра · Fraunces / Inter · кастомные accent-маркеры
+   Щедрый вертикальный ритм · консистентные .blk / .craft / .react / .voices / .who
+   Сверено с реальной разметкой UA/RU/EN и дефолтами template.html
+   ============================================================================ */
+
+/* ---- Щедрый ритм между блоками разбора (дефолт был 22px) ----------------- */
+.item .blk,
+.item .craft,
+.item .react,
+.item .voices,
+.item .who,
+.item .gqx{
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+/* первый аналитический блок после рассказа — чуть больше воздуха */
+.item .story + .blk,
+.item .story + .craft,
+.item .story + .react,
+.item .story + .voices,
+.item .story + .who,
+.item .story + .gq{
+  margin-top: 34px;
+}
+
+/* ---- Единый заголовок блоков (h4): тонкая accent-черта + подчёркивание ---- */
+.item .blk h4,
+.item .craft h4,
+.item .react h4,
+.item .voices h4,
+.item .who h4,
+.item .gqx h4{
+  font-family: var(--body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  line-height: 1.2;
+  border-bottom: 1px solid var(--line-soft);
+}
+/* карточные блоки (фон/рамка) — заголовок без линии, он и так выделен фоном */
+.item .craft h4,
+.item .react h4,
+.item .who h4{
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.item .blk h4::before,
+.item .gqx h4::before,
+.item .voices h4::before{
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 1.5px;
+  margin-right: 9px;
+  vertical-align: middle;
+  background: var(--accent);
+  opacity: .55;
+}
+
+/* ============================================================================
+   БАЗОВЫЙ КАСТОМНЫЙ МАРКЕР — тонкое accent-кольцо (контурный кружок)
+   Заменяет дефолтный •. Читаемо на paper, paper-warm и accent-tint (5.9–7.4:1)
+   ============================================================================ */
+.item .blk ul,
+.item .craft ul,
+.item .gqx ul,
+.item .react ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- .blk «Где писали» + .gq «Ограничения» → один редакторский список ----- */
+.item .blk li,
+.item .gqx li{
+  position: relative;
+  font-family: var(--body);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  padding: 11px 0 11px 26px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.item .blk li:first-child,
+.item .gqx li:first-child{ padding-top: 2px; }
+.item .blk li:last-child,
+.item .gqx li:last-child{ border-bottom: 0; }
+/* маркер: тонкое accent-кольцо */
+.item .blk li::before,
+.item .gqx li::before{
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 1.02em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  box-sizing: border-box;
+}
+.item .blk li a,
+.item .gqx li a{
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent-soft);
+}
+.item .blk li a:hover,
+.item .gqx li a:hover{
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+/* ============================================================================
+   .gq «Ограничения» — СБРОС моно-бокса (был var(--mono) + border-left + фон)
+   Подаём как чистый редакторский список .blk-стиля
+   ============================================================================ */
+.item .gqx{
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-left: 0;
+  font-family: var(--body);
+  font-size: inherit;
+  color: var(--ink-soft);
+}
+.item .gqx .lb{ display: none; }   /* устаревшая inline-метка моно-бокса (если встретится) */
+
+/* ============================================================================
+   .craft «Как применить» — карточка (paper), serif-текст, маркер-кольцо
+   ============================================================================ */
+.item .craft{
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 26px 24px;
+}
+.item .craft li{
+  position: relative;
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  padding: 14px 0 14px 30px;
+  border-top: 1px dashed var(--line);
+}
+.item .craft li:first-child{ border-top: 0; padding-top: 2px; }
+.item .craft li:last-child{ padding-bottom: 2px; }
+/* маркер: accent-кольцо, выровнено по высоте serif-строки */
+.item .craft li::before{
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 1.5em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background: var(--paper);
+  box-sizing: border-box;
+}
+.item .craft li:first-child::before{ top: .62em; }
+
+/* ============================================================================
+   .react «С разных сторон» — accent-tint, маркер-РОМБ (смысловая рифма «грани»)
+   Покрывает 4 реальные формы разметки:
+     RU  .react > span.lens                    (span = вся строка, без чипа)
+     UA  .react > ul > li > span.lens          (чип-ярлык + текст)
+     EN  .react > p  > span.lens               (чип-ярлык + текст)
+     —   .react > ul > li                      (пункт без ярлыка)
+   ============================================================================ */
+.item .react{
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-soft);
+  border-radius: 6px;
+  padding: 20px 26px 22px;
+}
+/* строки .react: li | прямой span.lens | p */
+.item .react li,
+.item .react > span.lens,
+.item .react > p{
+  position: relative;
+  display: block;
+  font-family: var(--body);
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  margin: 0;
+  padding: 13px 0 13px 28px;
+  border-top: 1px dashed var(--accent-soft);
+}
+.item .react li:first-child,
+.item .react > span.lens:first-of-type,
+.item .react > p:first-of-type{ border-top: 0; padding-top: 4px; }
+.item .react li:last-child,
+.item .react > span.lens:last-of-type,
+.item .react > p:last-of-type{ padding-bottom: 4px; }
+
+/* маркер-ромб для каждой строки .react */
+.item .react li::before,
+.item .react > span.lens::before,
+.item .react > p::before{
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 1.42em;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  border-radius: 1px;
+  opacity: .9;
+}
+.item .react > span.lens:first-of-type::before,
+.item .react > p:first-of-type::before{ top: .92em; }
+.item .react li:first-child::before{ top: 1.32em; }
+
+/* RU-форма: span.lens — это вся строка → ровный editorial-вид, БЕЗ чипа */
+.item .react > span.lens{
+  font-weight: 400;
+  font-size: 14.5px;
+  letter-spacing: 0;
+  text-transform: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--ink-soft);
+}
+
+/* UA/EN-форма: span.lens — это ярлык ВНУТРИ строки → лёгкий accent-чип */
+.item .react li .lens,
+.item .react > p .lens{
+  position: static;
+  display: inline-block;
+  font-family: var(--body);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  border: 0;
+  border-radius: 100px;
+  padding: 3px 10px;
+  margin-right: 10px;
+  vertical-align: 2px;
+  line-height: 1.4;
+}
+.item .react li .lens::before,
+.item .react > p .lens::before{ content: none; }  /* у чипа-ярлыка ромба нет */
+
+/* ============================================================================
+   .voices «Прямая речь» — спокойная серифная цитата (в дефолте стиля не было)
+   ============================================================================ */
+.item .voices{
+  padding-left: 22px;
+  border-left: 2px solid var(--accent-soft);
+}
+.item .voices blockquote{
+  font-family: var(--display);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 18px;
+}
+.item .voices blockquote:last-child{ margin-bottom: 0; }
+.item .voices blockquote a{
+  font-style: normal;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-soft);
+}
+.item .voices blockquote a:hover{
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+/* ============================================================================
+   .who «Авторы и команда» — сетка 2 кол., ОБЛЕГЧЁННАЯ роль .r
+   Разметка: .gr > p.p ( <span.nm> + <span.r> )  ИЛИ  ( <a.lk> )
+   ============================================================================ */
+.item .who{
+  background: var(--paper-warm);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 26px 24px;
+}
+.item .who .gr{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px;
+}
+.item .who .p{ margin: 0; line-height: 1.5; }
+
+/* имя — акцент карточки */
+.item .who .p .nm{
+  display: block;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+/* роль — лёгкая: sentence-case, muted, БЕЗ тяжёлого uppercase letter-spacing */
+.item .who .p .r{
+  display: block;
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+/* ссылки команды */
+.item .who .p .lk{
+  display: inline-block;
+  font-family: var(--body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-soft);
+}
+.item .who .p .lk:hover{
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+/* ============================================================================
+   Адаптив — согласовано с дефолтным брейкпоинтом 760px
+   ============================================================================ */
+@media (max-width: 760px){
+  .item .who .gr{ grid-template-columns: 1fr; gap: 16px; }
+  .item .craft,
+  .item .react,
+  .item .who{ padding-left: 20px; padding-right: 20px; }
+  .item .voices blockquote{ font-size: 17px; }
+}
+
   .langbar{position:sticky;top:0;z-index:30;display:flex;justify-content:flex-end;gap:6px;padding:10px 56px;background:var(--paper-warm);border-bottom:1px solid var(--line);}
   .langbar button{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--accent-soft);background:var(--paper);color:var(--ink-muted);border-radius:3px;cursor:pointer;transition:.15s;}
   .langbar button:hover{color:var(--accent);border-color:var(--accent);}
@@ -272,7 +618,7 @@
 <li>Эффект не требует подготовки — работает с первого раза.</li>
 </ul>
 </div>
-<div class="gq">
+<div class="blk">
 <h4>Ограничения</h4>
 <ul>
 <li>Опыт участников определялся по самоотчёту.</li>
@@ -340,7 +686,7 @@
 
 </ul>
 </div>
-<div class="gq">
+<div class="blk">
 <h4>Ограничения</h4>
 <ul>
 <li>Спор касается механизма и объяснений, а не эффективности конкретных практик.</li>
@@ -406,7 +752,7 @@
 <li>Добавлен единый журнал по препаратам GLP-1.</li>
 </ul>
 </div>
-<div class="gq">
+<div class="blk">
 <h4>Ограничения</h4>
 <ul>
 <li>Кольцо не измеряет точные цифры давления — только отслеживает паттерны и сдвиги.</li>
@@ -925,7 +1271,7 @@
 <li>If you already have a longer routine, the data supports keeping the first minutes as real practice rather than warm-up.</li>
 </ul>
 </div>
-<div class="gq">
+<div class="blk">
 <h4>Limitations</h4>
 <ul>
 <li>Experience level was self-reported.</li>
@@ -992,7 +1338,7 @@
 <li>The clinical practices were explicitly carved out of the dispute by voices on both sides.</li>
 </ul>
 </div>
-<div class="gq">
+<div class="blk">
 <h4>Limitations</h4>
 <ul>
 <li>This is a theoretical and interpretive dispute, not a new experiment.</li>
@@ -1060,7 +1406,7 @@
 <li>Single GLP-1 medication log.</li>
 </ul>
 </div>
-<div class="gq">
+<div class="blk">
 <h4>Limitations</h4>
 <ul>
 <li>The biggest software features also come to older rings — the Ring 5 difference is mostly physical.</li>
